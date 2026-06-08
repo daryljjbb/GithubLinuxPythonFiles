@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Home Cloud</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0b0e11; color: #e9ecef; }
+        .card-custom { background: #15191c; border: 1px solid #2d3339; border-radius: 10px; }
+        .stat-val { font-size: 1.8rem; font-weight: bold; color: #00d4ff; }
+        .media-item { border-bottom: 1px solid #2d3339; padding: 15px 0; }
+        .media-item:last-child { border-bottom: none; }
+        .btn-stream { background: #00d4ff; color: #0b0e11; font-weight: bold; border: none; }
+        .btn-stream:hover { background: #00b8e6; }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🐧 Linux Media Hub</h2>
+        <span class="badge bg-secondary">User: {{ stats.user }}</span>
+    </div>
+
+    <!-- ERROR ALERT (Only shows if there is a path problem) -->
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Path Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- STATS ROW -->
+    <div class="row g-3 mb-5">
+        <div class="col-md-4">
+            <div class="card-custom p-3 text-center">
+                <div class="text-uppercase small text-muted">CPU Load</div>
+                <div class="stat-val">{{ stats.cpu }}%</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-custom p-3 text-center">
+                <div class="text-uppercase small text-muted">RAM Usage</div>
+                <div class="stat-val text-success">{{ stats.ram }}%</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-custom p-3 text-center">
+                <div class="text-uppercase small text-muted">Last Sync</div>
+                <div class="stat-val text-warning">{{ stats.uptime }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEDIA LIST -->
+    <div class="card-custom p-4">
+        <h4 class="mb-4">Available Media</h4>
+        {% if files %}
+            {% for file in files %}
+            <div class="media-item d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="fw-bold">{{ file }}</div>
+                    <div class="small text-muted">Ready to stream to iPhone</div>
+                </div>
+                <a href="/stream/{{ file }}" class="btn btn-stream btn-sm px-4">PLAY</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center py-5">
+                <p class="text-muted">No media files found in your Videos folder.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
