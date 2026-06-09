@@ -120,3 +120,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"FATAL: Auditor crashed: {e}")
         sys.exit(1) # Return a non-zero exit code to the Linux Shell
+        sys.exit(1) # Return a non-zero exit code to the Linux Shell
